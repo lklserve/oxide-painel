@@ -1,0 +1,14 @@
+node_modules/
+*.log
+npm-debug.log*
+
+.env
+.env.*
+!.env.example
+
+.vercel/
+.vercel
+public/
+*.bak_*
+*_backup_*
+

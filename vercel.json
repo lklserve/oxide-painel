@@ -1,0 +1,8 @@
+{
+    "cleanUrls": true,
+    "buildCommand": "mkdir -p public && cp index.html public/",
+    "outputDirectory": "public",
+    "rewrites": [
+        { "source": "/api/(.*)", "destination": "/api/$1" }
+    ]
+}
