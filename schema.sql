@@ -119,3 +119,20 @@ CREATE TABLE IF NOT EXISTS processed_orders (
 ALTER TABLE processed_orders ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "service_role_full_access" ON processed_orders;
 CREATE POLICY "service_role_full_access" ON processed_orders FOR ALL USING (auth.role() = 'service_role') WITH CHECK (auth.role() = 'service_role');
+
+-- 5. Admin Sessions Table
+CREATE TABLE IF NOT EXISTS admin_sessions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    token TEXT UNIQUE NOT NULL,
+    admin_name TEXT NOT NULL,
+    admin_role TEXT DEFAULT 'admin',
+    ip TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    last_active TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+ALTER TABLE admin_sessions ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "service_role_full_access" ON admin_sessions;
+CREATE POLICY "service_role_full_access" ON admin_sessions FOR ALL USING (auth.role() = 'service_role') WITH CHECK (auth.role() = 'service_role');
+
